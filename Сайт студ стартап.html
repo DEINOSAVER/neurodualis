@@ -1,0 +1,767 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>NeuroDualis — Инновационная терапия мигрени</title>
+<style>
+  :root {
+    --bg: #0a0a0f;
+    --card: #13131a;
+    --card-border: rgba(255,255,255,0.06);
+    --primary: #3b82f6;
+    --primary-glow: rgba(59,130,246,0.3);
+    --secondary: #06b6d4;
+    --text: #ffffff;
+    --text-muted: #9ca3af;
+    --text-dim: #6b7280;
+    --radius: 16px;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+  }
+
+  .container {
+    max-width: 1140px;
+    margin: 0 auto;
+    padding: 0 24px;
+  }
+
+  /* Header */
+  header {
+    padding: 20px 0;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(10,10,15,0.8);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--card-border);
+  }
+  .header-inner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+    color: var(--text);
+    font-weight: 700;
+    font-size: 22px;
+  }
+  .logo-icon {
+    width: 36px;
+    height: 36px;
+    background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  nav {
+    display: flex;
+    gap: 32px;
+  }
+  nav a {
+    text-decoration: none;
+    color: var(--text-muted);
+    font-weight: 500;
+    font-size: 14px;
+  }
+
+  /* Hero */
+  .hero {
+    padding: 100px 0 120px;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero-glow {
+    position: absolute;
+    top: 0; left: 50%;
+    transform: translateX(-50%);
+    width: 600px; height: 400px;
+    background: radial-gradient(ellipse, var(--primary-glow) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .hero-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    align-items: center;
+    position: relative;
+    z-index: 1;
+  }
+  .hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(59,130,246,0.1);
+    border: 1px solid rgba(59,130,246,0.2);
+    color: var(--primary);
+    padding: 8px 16px;
+    border-radius: 50px;
+    font-size: 13px;
+    font-weight: 600;
+    margin-bottom: 24px;
+  }
+  .hero h1 {
+    font-size: 52px;
+    line-height: 1.1;
+    margin-bottom: 24px;
+    letter-spacing: -0.02em;
+  }
+  .hero h1 span {
+    background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  .hero p {
+    font-size: 18px;
+    color: var(--text-muted);
+    margin-bottom: 36px;
+    max-width: 500px;
+  }
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 16px 28px;
+    background: var(--primary);
+    color: white;
+    text-decoration: none;
+    border-radius: 12px;
+    font-weight: 600;
+    font-size: 15px;
+    transition: all 0.2s;
+    border: none;
+    cursor: pointer;
+  }
+  .btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px var(--primary-glow);
+  }
+  .btn-outline {
+    background: transparent;
+    border: 1px solid rgba(255,255,255,0.15);
+    color: var(--text);
+  }
+  .btn-outline:hover {
+    background: rgba(255,255,255,0.05);
+    border-color: rgba(255,255,255,0.25);
+  }
+  .hero-btns {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+  /* Device Card */
+  .device-card {
+    background: var(--card);
+    border: 1px solid var(--card-border);
+    border-radius: 24px;
+    padding: 40px;
+  }
+  .device-illustration {
+    width: 100%;
+    height: 260px;
+    background: linear-gradient(135deg, rgba(59,130,246,0.1) 0%, rgba(6,182,212,0.1) 100%);
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+  }
+  .pulse-ring {
+    position: absolute;
+    width: 100px;
+    height: 100px;
+    border: 2px solid var(--primary);
+    border-radius: 50%;
+    opacity: 0;
+    animation: pulse-ring 2.5s ease-out infinite;
+  }
+  .pulse-ring:nth-child(2) { animation-delay: 0.6s; }
+  .pulse-ring:nth-child(3) { animation-delay: 1.2s; }
+  @keyframes pulse-ring {
+    0% { transform: scale(0.5); opacity: 0.6; }
+    100% { transform: scale(2.5); opacity: 0; }
+  }
+  .device-core {
+    width: 70px; height: 70px;
+    background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    z-index: 1;
+    box-shadow: 0 0 40px var(--primary-glow);
+  }
+  .stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    margin-top: 24px;
+  }
+  .stat-item {
+    text-align: center;
+    padding: 16px 12px;
+    background: rgba(255,255,255,0.02);
+    border-radius: 12px;
+    border: 1px solid var(--card-border);
+  }
+  .stat-num {
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--primary);
+  }
+  .stat-label {
+    font-size: 12px;
+    color: var(--text-dim);
+    margin-top: 4px;
+  }
+  /* Sections */
+  .section {
+    padding: 100px 0;
+  }
+  .section-header {
+    text-align: center;
+    max-width: 600px;
+    margin: 0 auto 60px;
+  }
+  .section-header h2 {
+    font-size: 36px;
+    margin-bottom: 16px;
+  }
+  .section-header p {
+    color: var(--text-muted);
+    font-size: 17px;
+  }
+  /* Tech Grid */
+  .tech-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+  }
+  .tech-card {
+    background: var(--card);
+    border: 1px solid var(--card-border);
+    padding: 32px;
+    border-radius: var(--radius);
+  }
+  .tech-card:hover {
+    border-color: rgba(59,130,246,0.3);
+    transform: translateY(-4px);
+  }
+  .tech-icon {
+    width: 52px; height: 52px;
+    background: rgba(59,130,246,0.1);
+    border-radius: 14px;
+    display: flex; align-items: center; justify-content: center;
+    margin-bottom: 20px;
+  }
+  .tech-card h3 {
+    font-size: 20px;
+    margin-bottom: 12px;
+  }
+  .tech-card p {
+    color: var(--text-muted);
+    font-size: 15px;
+    line-height: 1.6;
+  }
+  .tech-card.highlight {
+    grid-column: span 2;
+    background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+    border: none;
+  }
+  .tech-card.highlight p {
+    color: rgba(255,255,255,0.85);
+  }
+  .tech-card.highlight .tech-icon {
+    background: rgba(255,255,255,0.2);
+  }
+  /* About Section */
+  .about-grid {
+    display: grid;
+    grid-template-columns: 1fr 1.3fr;
+    gap: 60px;
+    align-items: center;
+  }
+  .about-image {
+    background: var(--card);
+    border: 1px solid var(--card-border);
+    border-radius: 24px;
+    height: 380px;
+    display: flex; align-items: center; justify-content: center;
+    position: relative;
+  }
+  .university-badge {
+    position: absolute;
+    bottom: -16px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--card);
+    border: 1px solid var(--card-border);
+    padding: 10px 20px;
+    border-radius: 50px;
+    font-weight: 600;
+    color: var(--primary);
+    font-size: 13px;
+    white-space: nowrap;
+  }
+  .about-content h2 {
+    font-size: 32px;
+    margin-bottom: 16px;
+  }
+  .about-content p {
+    color: var(--text-muted);
+    font-size: 16px;
+    margin-bottom: 28px;
+  }
+  .credentials {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+  .credential-item {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 16px;
+    background: var(--card);
+    border: 1px solid var(--card-border);
+    border-radius: 12px;
+  }
+  .credential-icon {
+    width: 44px; height: 44px;
+    background: rgba(59,130,246,0.1);
+    border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+  .credential-text {
+    font-size: 14px;
+  }
+  /* Contact */
+  .contact-card {
+    max-width: 560px;
+    margin: 0 auto;
+    background: var(--card);
+    border: 1px solid var(--card-border);
+    padding: 48px;
+    border-radius: 24px;
+  }
+  .contact-card h2 {
+    font-size: 28px;
+    margin-bottom: 10px;
+    text-align: center;
+  }
+  .contact-card > p {
+    color: var(--text-muted);
+    text-align: center;
+    margin-bottom: 32px;
+  }
+  .form-group {
+    margin-bottom: 20px;
+  }
+  .form-group label {
+    display: block;
+    font-size: 14px;
+    font-weight: 500;
+    margin-bottom: 8px;
+    color: var(--text-muted);
+  }
+  .form-group input,
+  .form-group textarea {
+    width: 100%;
+    padding: 14px 16px;
+    border: 1px solid var(--card-border);
+    border-radius: 10px;
+    font-size: 15px;
+    font-family: inherit;
+    transition: all 0.2s;
+    background: rgba(255,255,255,0.03);
+    color: var(--text);
+  }
+  .form-group input:focus,
+  .form-group textarea:focus {
+    outline: none;
+    border-color: var(--primary);
+    background: rgba(255,255,255,0.05);
+  }
+  .form-group textarea {
+    resize: vertical;
+    min-height: 100px;
+  }
+  .form-submit {
+    width: 100%;
+    margin-top: 8px;
+  }
+  .form-success {
+    display: none;
+    text-align: center;
+    padding: 40px 20px;
+  }
+  .form-success.show {
+    display: block;
+  }
+  .form-success-icon {
+    width: 64px;
+    height: 64px;
+    background: rgba(34,197,94,0.15);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    margin: 0 auto 20px;
+  }
+  .form-success h3 {
+    font-size: 22px;
+    margin-bottom: 10px;
+    color: #22c55e;
+  }
+  .form-success p {
+    color: var(--text-muted);
+  }
+  /* Footer */
+  footer {
+    background: #080810;
+    border-top: 1px solid var(--card-border);
+    padding: 60px 0 40px;
+    margin-top: 60px;
+  }
+  .footer-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr;
+    gap: 60px;
+    margin-bottom: 50px;
+  }
+  .footer-brand .logo {
+    margin-bottom: 16px;
+  }
+  .footer-brand p {
+    color: var(--text-dim);
+    font-size: 14px;
+    max-width: 280px;
+  }
+  .footer-links h4 {
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 20px;
+    color: var(--text-dim);
+  }
+  .footer-links a {
+    display: block;
+    color: var(--text-muted);
+    text-decoration: none;
+    font-size: 14px;
+    margin-bottom: 12px;
+    transition: color 0.2s;
+  }
+  .footer-links a:hover {
+    color: var(--primary);
+  }
+  .footer-bottom {
+    border-top: 1px solid var(--card-border);
+    padding-top: 30px;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 20px;
+  }
+  .company-legal {
+    font-size: 14px;
+    color: var(--text-muted);
+  }
+  .company-legal strong {
+    color: var(--secondary);
+  }
+  .disclaimer {
+    font-size: 12px;
+    color: var(--text-dim);
+    padding: 10px 16px;
+    background: rgba(255,255,255,0.03);
+    border-radius: 8px;
+  }
+  /* Responsive */
+  @media(max-width: 900px) {
+    .hero-grid,
+    .about-grid {
+      grid-template-columns: 1fr;
+      gap: 40px;
+    }
+    .hero h1 {
+      font-size: 38px;
+    }
+    .tech-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
+</head>
+<body>
+
+<header>
+<div class="container">
+<div class="header-inner">
+<a href="#" class="logo">
+<div class="logo-icon">
+<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+<path d="M22 12h-4l-3 9L9 3l-3 9H2"/>
+</svg>
+</div>
+<span>NeuroDualis</span>
+</a>
+<nav>
+<a href="#technology">Технология</a>
+<a href="#about">Об исследовании</a>
+<a href="#contact">Контакты</a>
+</nav>
+</div>
+</div>
+</header>
+
+<section class="hero">
+<div class="hero-glow"></div>
+<div class="container">
+<div class="hero-grid">
+<div class="hero-content">
+<div class="hero-badge">
+<svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+<path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"/>
+</svg>
+</div>
+<h1>Инновационная терапия мигрени — <span>NeuroDualis</span></h1>
+<p>Разработка аспирантом кафедры Нервных болезней в рамках исследования в клинике им. А.Я. Кожевникова. Обеспечивает безопасное и эффективное воздействие на нервные окончания.</p>
+<div class="hero-btns">
+<a href="#contact" class="btn">
+Узнать подробнее
+<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+<line x1="5" y1="12" x2="19" y2="12"></line>
+<polyline points="12 5 19 12 12 19"></polyline>
+</svg>
+</a>
+<a href="#technology" class="btn btn-outline">Как это работает</a>
+</div>
+</div>
+<div class="hero-visual">
+<div class="device-card">
+<div class="device-illustration">
+<div class="pulse-ring"></div>
+<div class="pulse-ring"></div>
+<div class="pulse-ring"></div>
+<div class="device-core">
+<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+<path d="M22 12h-4l-3 9L9 3l-3 9H2"/>
+</svg>
+</div>
+</div>
+<div class="stats">
+<div class="stat-item">
+<div class="stat-num">20</div>
+<div class="stat-label">минут сеанс</div>
+</div>
+<div class="stat-item">
+<div class="stat-num">2</div>
+<div class="stat-label">зоны воздействия</div>
+</div>
+<div class="stat-item">
+<div class="stat-num">0</div>
+<div class="stat-label">побочных эффектов</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+
+<section class="section" id="technology">
+<div class="container">
+<div class="section-header">
+<h2>Технология NeuroDualis</h2>
+<p>Двойная стимуляция нервных окончаний для максимальной эффективности</p>
+</div>
+<div class="tech-grid">
+<div class="tech-card">
+<div class="tech-icon">
+<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#3b82f6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+<circle cx="12" cy="12" r="10"></circle>
+<line x1="12" y1="8" x2="12" y2="12"></line>
+<line x1="12" y1="16" x2="12.01" y2="16"></line>
+</svg>
+</div>
+<h3>Тригеминальная стимуляция</h3>
+<p>Воздействие на тройничный нерв для снижения чувствительности боли.</p>
+</div>
+<div class="tech-card">
+<div class="tech-icon">
+<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#3b82f6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+<path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
+</svg>
+</div>
+<h3>Затылочная стимуляция</h3>
+<p>Блокирует передачу болевых импульсов в системе головной боли.</p>
+</div>
+<div class="tech-card highlight">
+<div class="tech-icon">
+<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+<polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
+</svg>
+</div>
+<h3>Синергия стимуляции</h3>
+<p>Объединение двух методов для усиления эффекта и снижения головных болей.</p>
+</div>
+<div class="tech-card">
+<div class="tech-icon">
+<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#3b82f6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+<path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+</svg>
+</div>
+<h3>Безопасность и портативность</h3>
+<p>Низкоамплитудные микротоки без побочных эффектов, компактный для использования дома и в пути.</p>
+</div>
+</div>
+</div>
+</section>
+
+<section class="section" id="about">
+<div class="container">
+<div class="about-grid">
+<div class="about-image">
+<svg width="100" height="100" viewBox="0 0 24 24" fill="none" stroke="#3b82f6" stroke-width="1" opacity="0.5">
+<path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+<circle cx="12" cy="7" r="4"></circle>
+</svg>
+<div class="university-badge">Клиника им. А.Я. Кожевникова, Сеченовский университет</div>
+</div>
+<div class="about-content">
+<h2>Исследование и разработка аспирантом</h2>
+<p>Проект проводится на базе Клиники нервных болезней им. А.Я. Кожевникова в рамках научных исследований в Сеченовском университете. Наша цель — сделать лечение мигрени безопасным, доступным и эффективным.</p>
+<div class="credentials">
+<div class="credential-item">
+<div class="credential-icon">
+<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#3b82f6" stroke-width="2">
+<path d="M22 10v6M2 10l10-5 10 5-10 5z"></path>
+<path d="M6 12v5c3 3 9 3 12 0v-5"></path>
+</svg>
+</div>
+<div class="credential-text">
+<strong>Клиника им. А.Я. Кожевникова</strong>
+<span>Сеченовский университет</span>
+</div>
+</div>
+<div class="credential-item">
+<div class="credential-icon">
+<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#3b82f6" stroke-width="2">
+<rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect>
+<path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path>
+</svg>
+</div>
+<div class="credential-text">
+<strong>ООО «Боловная голь»</strong>
+<span>Медицинские изделия для нейростимуляции</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+
+<section id="contact">
+<div class="container">
+<div class="contact-card">
+<h2>Связь с нами</h2>
+<p>Оставьте заявку для получения дополнительной информации о проекте.</p>
+<form id="inquiryForm">
+<div class="form-group">
+<label for="name">Имя</label>
+<input type="text" id="name" name="name" placeholder="Ваше имя" required />
+</div>
+<div class="form-group">
+<label for="email">Email</label>
+<input type="email" id="email" name="email" placeholder="example@mail.ru" required />
+</div>
+<div class="form-group">
+<label for="message">Сообщение</label>
+<textarea id="message" name="message" placeholder="Ваш вопрос или комментарий..."></textarea>
+</div>
+<button type="submit" class="btn">Отправить заявку</button>
+</form>
+</div>
+<div class="form-success" id="formSuccess">
+<div class="form-success-icon">
+<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="2.5">
+<polyline points="20 6 9 17 4 12"></polyline>
+</svg>
+</div>
+<h3>Заявка успешно отправлена</h3>
+<p>Мы свяжемся с вами в ближайшее время.</p>
+</div>
+</div>
+</section>
+
+<footer>
+<div class="container">
+<div class="footer-grid">
+<div class="footer-brand">
+<a href="#" class="logo">
+<div class="logo-icon">
+<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5">
+<path d="M22 12h-4l-3 9L9 3l-3 9H2"></path>
+</svg>
+</div>
+<span>NeuroDualis</span>
+</a>
+<p>Разработка медицинских устройств для нейростимуляции.</p>
+</div>
+<div class="footer-links">
+<h4>Навигация</h4>
+<a href="#technology">Технология</a>
+<a href="#about">Об исследовании</a>
+<a href="#contact">Контакты</a>
+</div>
+<div class="footer-links">
+<h4>Контакты</h4>
+<a href="mailto:info@neuropulse.ru">info@neuropulse.ru</a>
+<a href="#">Москва, Россия</a>
+</div>
+</div>
+<div class="footer-bottom">
+<div class="company-legal">
+<strong>ООО «Боловная голь»</strong> · © 2024–2026. Все права защищены.
+</div>
+<div class="disclaimer">
+Имеются противопоказания. Требуется консультация специалиста.
+</div>
+<div class="grant-notice">
+<p>Проект создан при поддержке Федерального государственного бюджетного учреждения «Фонд содействия развитию малых форм предприятий в научно-технической сфере» в рамках программы «Студенческий стартап» федерального проекта «Платформа университетского технологического предпринимательства»</p>
+</div>
+</div>
+</div>
+</footer>
+
+<script>
+  document.getElementById('inquiryForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    const btn = this.querySelector('button');
+    btn.innerHTML = 'Отправка...';
+    btn.disabled = true;
+    setTimeout(() => {
+      document.getElementById('inquiryForm').style.display='none';
+      document.getElementById('formSuccess').classList.add('show');
+    }, 800);
+  });
+  document.querySelectorAll('a[href^="#"]').forEach(function(a) {
+    a.addEventListener('click', function(e) {
+      e.preventDefault();
+      document.querySelector(this.getAttribute('href')).scrollIntoView({behavior:'smooth'});
+    });
+  });
+</script>
+</body>
+</html>
